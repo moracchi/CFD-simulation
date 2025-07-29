@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CFD ポジションシミュレーター</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダ -->
+        <header class="header">
+            <h1>CFD ポジションシミュレーター</h1>
+            <p>段階的なポジション構築のリスク・リターンを可視化</p>
+        </header>
+
+        <!-- 設定 -->
+        <section class="settings-panel">
+            <h2>シミュレーション設定</h2>
+            <div class="basic-settings">
+                <div class="input-group">
+                    <label for="startPrice">ポジションエントリー開始価格</label>
+                    <input type="number" id="startPrice" value="41150" step="1">
+                    <span class="unit">円</span>
+                </div>
+                <div class="input-group">
+                    <label for="direction">売買方向</label>
+                    <select id="direction">
+                        <option value="sell">売り</option>
+                        <option value="buy">買い</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="addInterval">ポジション追加の価格幅</label>
+                    <input type="number" id="addInterval" value="200" step="1">
+                    <span class="unit">円</span>
+                </div>
+                <div class="input-group">
+                    <label for="displayInterval">表示する価格間隔</label>
+                    <input type="number" id="displayInterval" value="1000" step="1">
+                    <span class="unit">円</span>
+                </div>
+            </div>
+
+            <div class="position-rules">
+                <h3>ポジションサイズルール</h3>
+                <div class="rules-header">
+                    <span>開始価格</span>
+                    <span>終了価格</span>
+                    <span>追加サイズ</span>
+                    <span>操作</span>
+                </div>
+                <div id="rulesContainer">
+                    <!-- JSで行追加 -->
+                </div>
+                <button type="button" id="addRuleBtn" class="add-rule-btn">+ ルールを追加</button>
+            </div>
+            <button type="button" id="simulateBtn" class="simulate-btn">シミュレーション実行</button>
+        </section>
+
+        <section class="results-panel" id="resultsPanel" style="display: none;">
+            <h2>シミュレーション結果</h2>
+            <div class="summary" id="summary"></div>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="table">結果テーブル</button>
+                <button class="tab-btn" data-tab="chart">グラフ</button>
+            </div>
+            <div class="tab-content active" id="tableTab">
+                <div class="table-container">
+                    <table id="resultsTable">
+                        <thead>
+                            <tr>
+                                <th>価格</th>
+                                <th>累計ポジション数</th>
+                                <th>平均取得単価</th>
+                                <th>評価損益</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-content" id="chartTab">
+                <div class="chart-container">
+                    <canvas id="profitChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="positionChart"></canvas>
+                </div>
+            </div>
+        </section>
+        <div id="errorMessage" class="error-message" style="display: none;"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
