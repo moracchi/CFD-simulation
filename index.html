@@ -9,40 +9,52 @@
 </head>
 <body>
     <div class="container">
-        <!-- ヘッダ -->
+        <!-- ヘッダー -->
         <header class="header">
             <h1>CFD ポジションシミュレーター</h1>
             <p>段階的なポジション構築のリスク・リターンを可視化</p>
         </header>
 
-        <!-- 設定 -->
+        <!-- 設定パネル -->
         <section class="settings-panel">
             <h2>シミュレーション設定</h2>
+            
+            <!-- 基本設定 - HTML5バリデーション強化 -->
             <div class="basic-settings">
                 <div class="input-group">
                     <label for="startPrice">ポジションエントリー開始価格</label>
-                    <input type="number" id="startPrice" value="41150" step="1">
+                    <input type="number" id="startPrice" value="41150" 
+                           min="1" step="1" required 
+                           title="1円以上の整数で入力してください">
                     <span class="unit">円</span>
                 </div>
+                
                 <div class="input-group">
                     <label for="direction">売買方向</label>
-                    <select id="direction">
+                    <select id="direction" required>
                         <option value="sell">売り</option>
                         <option value="buy">買い</option>
                     </select>
                 </div>
+                
                 <div class="input-group">
                     <label for="addInterval">ポジション追加の価格幅</label>
-                    <input type="number" id="addInterval" value="200" step="1">
+                    <input type="number" id="addInterval" value="200" 
+                           min="1" step="1" required 
+                           title="1円以上の整数で入力してください">
                     <span class="unit">円</span>
                 </div>
+                
                 <div class="input-group">
                     <label for="displayInterval">表示する価格間隔</label>
-                    <input type="number" id="displayInterval" value="1000" step="1">
+                    <input type="number" id="displayInterval" value="1000" 
+                           min="1" step="1" required 
+                           title="1円以上の整数で入力してください">
                     <span class="unit">円</span>
                 </div>
             </div>
 
+            <!-- ポジションサイズルール -->
             <div class="position-rules">
                 <h3>ポジションサイズルール</h3>
                 <div class="rules-header">
@@ -52,21 +64,31 @@
                     <span>操作</span>
                 </div>
                 <div id="rulesContainer">
-                    <!-- JSで行追加 -->
+                    <!-- 動的に生成されるルール -->
                 </div>
                 <button type="button" id="addRuleBtn" class="add-rule-btn">+ ルールを追加</button>
             </div>
+
+            <!-- 実行ボタン -->
             <button type="button" id="simulateBtn" class="simulate-btn">シミュレーション実行</button>
         </section>
 
+        <!-- 結果パネル -->
         <section class="results-panel" id="resultsPanel" style="display: none;">
             <h2>シミュレーション結果</h2>
-            <div class="summary" id="summary"></div>
+            
+            <!-- サマリー -->
+            <div class="summary" id="summary">
+                <!-- 結果サマリーが表示される -->
+            </div>
 
+            <!-- タブ切り替え -->
             <div class="tabs">
                 <button class="tab-btn active" data-tab="table">結果テーブル</button>
                 <button class="tab-btn" data-tab="chart">グラフ</button>
             </div>
+
+            <!-- テーブル表示 -->
             <div class="tab-content active" id="tableTab">
                 <div class="table-container">
                     <table id="resultsTable">
@@ -79,10 +101,13 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <!-- 結果が動的に生成される -->
                         </tbody>
                     </table>
                 </div>
             </div>
+
+            <!-- グラフ表示 -->
             <div class="tab-content" id="chartTab">
                 <div class="chart-container">
                     <canvas id="profitChart"></canvas>
@@ -92,8 +117,11 @@
                 </div>
             </div>
         </section>
+
+        <!-- エラーメッセージ -->
         <div id="errorMessage" class="error-message" style="display: none;"></div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
